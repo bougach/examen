@@ -1,36 +1,37 @@
-package com.ensa.cours;
+package com.ensa.school;
 
-import com.ensa.cours.client.StudentClient;
+import com.ensa.school.client.StudentClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class SchoolService {
+public class CourseService {
 
-    private final CoursRepository repository;
+    private final CourseRepository repository;
     private final StudentClient client;
 
-    public void saveCours(Cours cours) {
-        repository.save(cours);
+    public void saveCourse(Course course) {
+        repository.save(course);
     }
 
-    public List<Cours> findAllCours() {
+    public List<Course> findAllCourses() {
         return repository.findAll();
     }
 
-    public CoursResponse findCoursStudent(Integer coursId) {
-        var cours = repository.findById(coursId)
+    public FullCourseResponse findCoursesWithStudents(String courseId) {
+        var school = repository.findById(UUID.fromString(courseId))
                 .orElse(
-                        Cours.builder()
-                                .coursName("ther is no  cours  whith that name")
+                        Course.builder()
+                                .name("NOT_FOUND")
                                 .build()
                 );
-        var students = client.findAllStudentWithSameCours(coursId);
-        return CoursResponse.builder()
-                .name(cours.getName())
+        var students = client.findAllStudentWithSameCours(courseId);
+        return FullCourseResponse.builder()
+                .name(school.getName())
                 .students(students)
                 .build();
     }
