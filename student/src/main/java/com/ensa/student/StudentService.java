@@ -1,4 +1,4 @@
-package com.ensa;
+package com.ensa.student;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class StudentService {
         return repository.findAll();
     }
 
-    public List<Student> findAllStudentsBySchool(Integer schoolId) {
-        return repository.findAllBySchoolId(schoolId);
+    public List<Student> findAllStudentsByCourse(String schoolId) {
+        return repository.findAllByCoursesContaining(schoolId);
     }
 }

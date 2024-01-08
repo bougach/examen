@@ -1,4 +1,5 @@
-package com.ensa;
+package com.ensa.student;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/students")
+@RequestMapping("/api/students")
 @RequiredArgsConstructor
 public class StudentController {
 
@@ -26,10 +27,10 @@ public class StudentController {
         return ResponseEntity.ok(service.findAllStudents());
     }
 
-    @GetMapping("/school/{school-id}")
+    @GetMapping("/course/{courseId}")
     public ResponseEntity<List<Student>> findAllStudents(
-            @PathVariable("school-id") Integer schoolId
+            @PathVariable("courseId") String courseId
     ) {
-        return ResponseEntity.ok(service.findAllStudentsBySchool(schoolId));
+        return ResponseEntity.ok(service.findAllStudentsByCourse(courseId));
     }
 }
